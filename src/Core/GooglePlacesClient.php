@@ -1,6 +1,6 @@
 <?php
 
-namespace Breakdance\A11y\Core;
+namespace Breakdance\Ext\Core;
 
 class GooglePlacesClient
 {
@@ -21,7 +21,7 @@ class GooglePlacesClient
             return ['ok' => false, 'error' => 'missing_place_id'];
         }
 
-        $cache_key = 'bda11y_gpr_' . md5($place_id);
+        $cache_key = 'bdext_gpr_' . md5($place_id);
         $cached    = get_transient($cache_key);
 
         if (is_array($cached)) {

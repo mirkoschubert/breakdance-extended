@@ -1,7 +1,7 @@
 // window-Namespace vorbereiten
-window.BDA11Y = window.BDA11Y || {}
+window.BDEXT = window.BDEXT || {}
 
-window.BDA11Y.initLeafletMap = function (el, settings) {
+window.BDEXT.initLeafletMap = function (el, settings) {
   if (!el || typeof L === 'undefined') {
     console.warn('Leaflet oder .leaflet-map nicht verfügbar')
     return

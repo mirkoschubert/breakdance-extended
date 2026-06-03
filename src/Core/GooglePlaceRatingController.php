@@ -1,6 +1,6 @@
 <?php
 
-namespace Breakdance\A11y\Core;
+namespace Breakdance\Ext\Core;
 
 use WP_Error;
 use WP_REST_Request;
@@ -10,7 +10,7 @@ class GooglePlaceRatingController
 {
     public function register_routes(): void
     {
-        register_rest_route('bda11y/v1', '/place-rating', [
+        register_rest_route('bdext/v1', '/place-rating', [
             'methods'             => 'GET',
             'callback'            => [$this, 'get_place_rating'],
             'permission_callback' => '__return_true',
@@ -29,14 +29,14 @@ class GooglePlaceRatingController
 
     public function get_place_rating(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
-        $api_key = get_option('bda11y_google_api_key', '');
+        $api_key = get_option('bdext_google_api_key', '');
 
         if (empty($api_key)) {
             return new WP_Error('missing_api_key', 'Google Places API key not configured.', ['status' => 500]);
         }
 
         $place_id = (string) $request->get_param('place_id');
-        $ttl      = (int) get_option('bda11y_google_cache_ttl', 43200);
+        $ttl      = (int) get_option('bdext_google_cache_ttl', 43200);
 
         $client = new GooglePlacesClient($api_key, $ttl);
         $data   = $client->get_place_rating($place_id);

@@ -1,13 +1,15 @@
 <?php
 
-namespace BreakdanceA11yElement;
+namespace BreakdanceExtElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
 
 
+if (get_option('bdext_feature_gallery', '1') !== '1') return;
+
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceA11yElement\\BAGallery",
+    "BreakdanceExtElement\\BAGallery",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
@@ -45,7 +47,7 @@ class BAGallery extends \Breakdance\Elements\Element
 
     static function category()
     {
-        return 'breakdance-a11y';
+        return 'breakdance-extended';
     }
 
     static function badge()

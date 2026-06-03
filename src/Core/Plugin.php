@@ -1,10 +1,10 @@
 <?php
 
-namespace Breakdance\A11y\Core;
+namespace Breakdance\Ext\Core;
 
-use Breakdance\A11y\Core\Optimization;
-use Breakdance\A11y\Core\AdminSettings;
-use Breakdance\A11y\Core\GooglePlaceRatingController;
+use Breakdance\Ext\Core\Optimization;
+use Breakdance\Ext\Core\AdminSettings;
+use Breakdance\Ext\Core\GooglePlaceRatingController;
 use function BreakdanceCustomElements\registerElements;
 
 class Plugin
@@ -13,7 +13,6 @@ class Plugin
 
   public function __construct()
   {
-    $this->optimization = new Optimization();
     $this->init();
     $this->registerElements();
     $this->register_dependencies();
@@ -30,6 +29,10 @@ class Plugin
     add_action('init', [$this, 'add_excerpt_to_pages']);
 
     new AdminSettings();
+
+    if (get_option('bdext_feature_optimization', true)) {
+      $this->optimization = new Optimization();
+    }
 
     add_action('rest_api_init', function () {
       $controller = new GooglePlaceRatingController();
@@ -57,42 +60,42 @@ class Plugin
 
   public function load_text_domain()
   {
-    load_plugin_textdomain('bda11y', false, BDA11Y_PATH . '/lang/');
+    load_plugin_textdomain('bdext', false, BDEXT_PATH . '/lang/');
   }
 
   public function get_plugin_name()
   {
-    return esc_html__(BDA11Y_PLUGIN, 'bda11y');
+    return esc_html__(BDEXT_PLUGIN, 'bdext');
   }
 
   public function enqueue_scripts()
   {
     if (!is_admin()) {
       wp_enqueue_script('jquery');
-      wp_enqueue_script('choices-js', plugins_url('/src/Core/assets/js/choices.min.js', BDA11Y_PATH), [], false, true);
-      wp_enqueue_script('bda11y-script', plugins_url('/src/Core/assets/js/bd-a11y.js', BDA11Y_PATH), ['jquery'], true);
+      wp_enqueue_script('choices-js', plugins_url('/src/Core/assets/js/choices.min.js', BDEXT_PATH), [], false, true);
+      wp_enqueue_script('bdext-script', plugins_url('/src/Core/assets/js/bd-ext.js', BDEXT_PATH), ['jquery'], true);
 
-      wp_enqueue_style('choices-css', plugins_url('/src/Core/assets/css/choices.min.css', BDA11Y_PATH));
-      wp_enqueue_style('bda11y-style', plugins_url('/src/Core/assets/css/bd-a11y.css', BDA11Y_PATH));
+      wp_enqueue_style('choices-css', plugins_url('/src/Core/assets/css/choices.min.css', BDEXT_PATH));
+      wp_enqueue_style('bdext-style', plugins_url('/src/Core/assets/css/bd-ext.css', BDEXT_PATH));
     }
   }
 
   public function register_dependencies()
   {
     add_filter('breakdance_reusable_dependencies_urls', function ($urls) {
-      $urls['bda11yGooglePlaceRatingJs'] = plugins_url('breakdance/elements/Google_Place_Rating/assets/js/google-place-rating.js', BDA11Y_PATH);
+      $urls['bdextGooglePlaceRatingJs'] = plugins_url('breakdance/elements/Google_Place_Rating/assets/js/google-place-rating.js', BDEXT_PATH);
 
-      $base = plugins_url('breakdance/elements/Leaflet_Maps/assets', BDA11Y_PATH);
+      $base = plugins_url('breakdance/elements/Leaflet_Maps/assets', BDEXT_PATH);
 
-      $urls['bda11yLeafletJs'] = $base . '/js/leaflet.js';
-      $urls['bda11yLeafletCss'] = $base . '/css/leaflet.css';
-      $urls['bda11yLeafletProviders'] = $base . '/js/leaflet-providers.js';
-      $urls['bda11yLeafletFullscreenJs'] = $base . '/js/leaflet.fullscreen.js';
-      $urls['bda11yLeafletFullscreenCss'] = $base . '/css/leaflet.fullscreen.css';
-      $urls['bda11yLeafletClusterJs'] = $base . '/js/leaflet.markercluster.js';
-      $urls['bda11yLeafletClusterCss'] = $base . '/css/MarkerCluster.css';
-      $urls['bda11yLeafletClusterDefaultCss'] = $base . '/css/MarkerCluster.Default.css';
-      $urls['bda11yLeafletInit'] = $base . '/js/leaflet-map-init.js';
+      $urls['bdextLeafletJs'] = $base . '/js/leaflet.js';
+      $urls['bdextLeafletCss'] = $base . '/css/leaflet.css';
+      $urls['bdextLeafletProviders'] = $base . '/js/leaflet-providers.js';
+      $urls['bdextLeafletFullscreenJs'] = $base . '/js/leaflet.fullscreen.js';
+      $urls['bdextLeafletFullscreenCss'] = $base . '/css/leaflet.fullscreen.css';
+      $urls['bdextLeafletClusterJs'] = $base . '/js/leaflet.markercluster.js';
+      $urls['bdextLeafletClusterCss'] = $base . '/css/MarkerCluster.css';
+      $urls['bdextLeafletClusterDefaultCss'] = $base . '/css/MarkerCluster.Default.css';
+      $urls['bdextLeafletInit'] = $base . '/js/leaflet-map-init.js';
 
       return $urls;
     });
@@ -110,7 +113,6 @@ class Plugin
       return $crumbs;
     }
 
-    // ID der Karriere-Seite anpassen!
     $career_page_id = 29;
     $career_page = get_post($career_page_id);
 
@@ -120,7 +122,6 @@ class Plugin
 
     $home_crumb = $crumbs[0];
 
-    // Neues Breadcrumb-Array: Home -> Karriere -> Rest
     $new_crumbs = [];
     $new_crumbs[] = $home_crumb;
     $new_crumbs[] = [

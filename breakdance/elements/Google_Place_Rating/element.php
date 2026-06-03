@@ -1,13 +1,15 @@
 <?php
 
-namespace BreakdanceA11yElement;
+namespace BreakdanceExtElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
 
 
+if (get_option('bdext_feature_google_rating', '1') !== '1') return;
+
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceA11yElement\\GooglePlaceRating",
+    "BreakdanceExtElement\\GooglePlaceRating",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
@@ -40,12 +42,12 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
 
     static function className()
     {
-        return 'bda11y-google-rating';
+        return 'bdext-google-rating';
     }
 
     static function category()
     {
-        return 'breakdance-a11y';
+        return 'breakdance-extended';
     }
 
     static function badge()
@@ -306,7 +308,7 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
     static function dependencies()
     {
         return ['0' =>  ['title' => 'Google Place Rating','inlineScripts' => ['(() => {
-  const endpoint = \'/wp-json/bda11y/v1/place-rating\';
+  const endpoint = \'/wp-json/bdext/v1/place-rating\';
 
   const cache = new Map();
 
@@ -331,7 +333,7 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
     new Intl.NumberFormat(\'de-DE\').format(v);
 
   const revealStars = (el, fillPercent) => {
-    const filledLayer = el.querySelector(\'.bda11y-google-rating__stars-filled\');
+    const filledLayer = el.querySelector(\'.bdext-google-rating__stars-filled\');
     if (!filledLayer) {
       return;
     }
@@ -357,8 +359,8 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
     try {
       const data = await fetchRating(placeId);
 
-      const valueEl = el.querySelector(\'.bda11y-google-rating__value\');
-      const countEl = el.querySelector(\'.bda11y-google-rating__count\');
+      const valueEl = el.querySelector(\'.bdext-google-rating__value\');
+      const countEl = el.querySelector(\'.bdext-google-rating__count\');
 
       if (showNumber && valueEl) {
         valueEl.textContent = formatRating(data.rating);
@@ -373,7 +375,7 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
         el.href = data.google_maps_uri;
       }
 
-      const store = target.closest(\'.bda11y-google-rating\') || target;
+      const store = target.closest(\'.bdext-google-rating\') || target;
       store.dataset.gprFillPercent = data.stars_percent;
       store.dataset.gprRating = data.rating;
       store.dataset.gprCount = data.user_rating_count;
@@ -388,13 +390,13 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
       }
 
     } catch (err) {
-      console.error(\'[bda11y] Hydration failed for place_id:\', placeId, err);
+      console.error(\'[bdext] Hydration failed for place_id:\', placeId, err);
       el.dataset.gprError = \'1\';
     }
   };
 
   const boot = () => {
-    const elements = document.querySelectorAll(\'.bda11y-google-rating__inner[data-place-id]\');
+    const elements = document.querySelectorAll(\'.bdext-google-rating__inner[data-place-id]\');
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -439,16 +441,16 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
 
 'onPropertyChange' => [['script' => '
 (function() {
-  const inner = document.querySelector(\'%%SELECTOR%% .bda11y-google-rating__inner\');
+  const inner = document.querySelector(\'%%SELECTOR%% .bdext-google-rating__inner\');
   if (!inner) return;
-  const store = inner.closest(\'.bda11y-google-rating\') || inner;
+  const store = inner.closest(\'.bdext-google-rating\') || inner;
   if (store.dataset.gprReady !== \'1\') return;
 
   const showRating = {{ content.components.show_rating ? \'true\' : \'false\' }};
   const showCount  = {{ content.components.show_count  ? \'true\' : \'false\' }};
 
-  const valueEl = inner.querySelector(\'.bda11y-google-rating__value\');
-  const countEl = inner.querySelector(\'.bda11y-google-rating__count\');
+  const valueEl = inner.querySelector(\'.bdext-google-rating__value\');
+  const countEl = inner.querySelector(\'.bdext-google-rating__count\');
 
   const formatRating = function(v) {
     return new Intl.NumberFormat(\'de-DE\', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(v);
@@ -464,7 +466,7 @@ class GooglePlaceRating extends \Breakdance\Elements\Element
     countEl.textContent = \'(\' + formatCount(parseInt(store.dataset.gprCount, 10)) + \')\';
   }
 
-  const filledLayer = inner.querySelector(\'.bda11y-google-rating__stars-filled\');
+  const filledLayer = inner.querySelector(\'.bdext-google-rating__stars-filled\');
   if (filledLayer && store.dataset.gprFillPercent) {
     const rightInset = (100 - parseFloat(store.dataset.gprFillPercent)).toFixed(4);
     filledLayer.style.clipPath = \'inset(0 \' + rightInset + \'% 0 0)\';

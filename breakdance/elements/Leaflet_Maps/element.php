@@ -1,13 +1,15 @@
 <?php
 
-namespace BreakdanceA11yElements;
+namespace BreakdanceExtElements;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
 
 
+if (get_option('bdext_feature_leaflet', '1') !== '1') return;
+
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceA11yElements\\LeafletMaps",
+    "BreakdanceExtElements\\LeafletMaps",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
@@ -40,12 +42,12 @@ class LeafletMaps extends \Breakdance\Elements\Element
 
     static function className()
     {
-        return 'bda11y-leaflet-map';
+        return 'bdext-leaflet-map';
     }
 
     static function category()
     {
-        return 'breakdance-a11y';
+        return 'breakdance-extended';
     }
 
     static function badge()
@@ -520,12 +522,12 @@ class LeafletMaps extends \Breakdance\Elements\Element
 
     static function dependencies()
     {
-        return ['0' =>  ['title' => 'Leaflet','scripts' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_CSS%%'],],'1' =>  ['title' => 'Leaflet Providers','scripts' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_PROVIDERS%%'],],'2' =>  ['title' => 'Leaflet Fullscreen','scripts' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_FULLSCREEN_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_FULLSCREEN_CSS%%'],],'3' =>  ['title' => 'Leaflet MarkerClusters','scripts' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_CLUSTER_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_CLUSTER_CSS%%','%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_CLUSTER_DEFAULT_CSS%%'],],'4' =>  ['title' => 'Leaflet Map Init','scripts' => ['%%BREAKDANCE_REUSABLE_BDA11Y_LEAFLET_INIT%%'],],'5' =>  ['title' => 'Leaflet Map Init Call','inlineScripts' => ['
+        return ['0' =>  ['title' => 'Leaflet','scripts' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_CSS%%'],],'1' =>  ['title' => 'Leaflet Providers','scripts' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_PROVIDERS%%'],],'2' =>  ['title' => 'Leaflet Fullscreen','scripts' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_FULLSCREEN_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_FULLSCREEN_CSS%%'],],'3' =>  ['title' => 'Leaflet MarkerClusters','scripts' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_CLUSTER_JS%%'],'styles' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_CLUSTER_CSS%%','%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_CLUSTER_DEFAULT_CSS%%'],],'4' =>  ['title' => 'Leaflet Map Init','scripts' => ['%%BREAKDANCE_REUSABLE_BDEXT_LEAFLET_INIT%%'],],'5' =>  ['title' => 'Leaflet Map Init Call','inlineScripts' => ['
 (function() {
   const el = document.querySelector(\'%%SELECTOR%% .leaflet-map\');
-  if (!el || !window.BDA11Y || typeof window.BDA11Y.initLeafletMap !== \'function\') return;
+  if (!el || !window.BDEXT || typeof window.BDEXT.initLeafletMap !== \'function\') return;
 
-  window.BDA11Y.initLeafletMap(el, {
+  window.BDEXT.initLeafletMap(el, {
     zoom: parseInt(\'{{ content.places.zoom|default(13) }}\', 10),
     providerKey: \'{{ content.places.provider|default("OpenStreetMap.Mapnik") }}\',
     locations: {{ content.places.locations|default([])|json_encode|raw }},
@@ -588,8 +590,8 @@ if (!el || typeof L === \'undefined\') {
   };
 
   // Zentralen Init‑Code aus dem Plugin wiederverwenden
-  if (window.BDA11Y && typeof window.BDA11Y.initLeafletMap === \'function\') {
-    window.BDA11Y.initLeafletMap(el, settings);
+  if (window.BDEXT && typeof window.BDEXT.initLeafletMap === \'function\') {
+    window.BDEXT.initLeafletMap(el, settings);
   }
 }',
 ],],
@@ -626,8 +628,8 @@ if (!el || typeof L === \'undefined\') {
   };
 
   // Zentralen Init‑Code aus dem Plugin wiederverwenden
-  if (window.BDA11Y && typeof window.BDA11Y.initLeafletMap === \'function\') {
-    window.BDA11Y.initLeafletMap(el, settings);
+  if (window.BDEXT && typeof window.BDEXT.initLeafletMap === \'function\') {
+    window.BDEXT.initLeafletMap(el, settings);
   }
 }',
 ],],];

@@ -1,5 +1,5 @@
 {
-  "name": "mirkoschubert/breakdance-a11y",
+  "name": "mirkoschubert/breakdance-extended",
   "type": "project",
   "license": "MIT",
   "require": {
@@ -7,7 +7,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Breakdance\\A11y\\": "src/",
+      "Breakdance\\Ext\\": "src/",
       "BreakdanceCustomElements\\": "breakdance/"
     },
     "files": [

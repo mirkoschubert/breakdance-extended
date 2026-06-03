@@ -1,6 +1,6 @@
 <?php
 
-namespace Breakdance\A11y\Core;
+namespace Breakdance\Ext\Core;
 
 class Optimization
 {
@@ -28,13 +28,6 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt den Pingback-Header
-   * @param array $links
-   * @return void
-   * @package Pagespeed
-   * @since 1.0.0
-   */
   public function remove_pingback(&$links)
   {
     foreach ($links as $l => $link) {
@@ -45,12 +38,6 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt Dashicons vom Frontend
-   * @return void
-   * @package Pagespeed
-   * @since 1.0.0
-   */
   public function remove_dashicons()
   {
     if (current_user_can('update_core')) {
@@ -60,13 +47,6 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt CSS- und JS-Version-Query-Strings
-   * @param string $src
-   * @return string
-   * @package Pagespeed
-   * @since 1.0.0
-   */
   public function remove_query_strings($src)
   {
     if (strpos($src, '?ver=')) {
@@ -76,44 +56,24 @@ class Optimization
     return $src;
   }
 
-  /**
-   * Entfernt den Shortlink-Header
-   * @return void
-   * @package Pagespeed
-   * @since 1.0.0
-   */
   public function remove_shortlink()
   {
     remove_action('wp_head', 'wp_shortlink_wp_head', 10);
   }
 
 
-  /**
-   * Macht jeden Kommentar- und Autor-Link zu einem externen Link
-   * @param string $content
-   * @return string
-   */
   public function external_comment_links($content)
   {
     return str_replace("<a ", "<a target='_blank' rel='noopener noreferrer' ", $content);
   }
 
 
-  /**
-   * Entfernt IP-Adressen aus Kommentaren
-   * @param string $comment_author_ip
-   * @return string
-   */
   public function remove_comments_ip($comment_author_ip)
   {
     return '';
   }
 
 
-  /**
-   * Deaktiviert Emojis
-   * @return void
-   */
   private function disable_emojis()
   {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -128,11 +88,6 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt Emoji-Plugin aus TinyMCE
-   * @param array $plugins
-   * @return array
-   */
   public function disable_emojis_tinymce($plugins)
   {
     if (is_array($plugins)) {
@@ -142,12 +97,6 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt DNS-Prefetch für Emojis
-   * @param array $urls
-   * @param string $relation_type
-   * @return array
-   */
   public function disable_emojis_remove_dns_prefetch($urls, $relation_type)
   {
     if ('dns-prefetch' == $relation_type) {
@@ -158,39 +107,25 @@ class Optimization
   }
 
 
-  /**
-   * Deaktiviert oEmbeds
-   * @return void
-   */
   private function disable_embeds()
   {
-    remove_action('rest_api_init', 'wp_oembed_register_route'); // JSON API
-    add_filter('embed_oembed_discover', '__return_false'); // Auto Discover
-    remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10); // Results
-    remove_action('wp_head', 'wp_oembed_add_discovery_links'); // Discovery Links
-    remove_action('wp_head', 'wp_oembed_add_host_js'); // Frontend JS
-    add_filter('tiny_mce_plugins', [$this, 'disable_embeds_tinymce_plugin']); // TinyMCE
-    add_filter('rewrite_rules_array', [$this, 'disable_embeds_rewrites']); // Rewrite Rules
-    remove_filter('pre_oembed_result', 'wp_filter_pre_oembed_result', 10); // oEmbeds Preloader
+    remove_action('rest_api_init', 'wp_oembed_register_route');
+    add_filter('embed_oembed_discover', '__return_false');
+    remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
+    remove_action('wp_head', 'wp_oembed_add_discovery_links');
+    remove_action('wp_head', 'wp_oembed_add_host_js');
+    add_filter('tiny_mce_plugins', [$this, 'disable_embeds_tinymce_plugin']);
+    add_filter('rewrite_rules_array', [$this, 'disable_embeds_rewrites']);
+    remove_filter('pre_oembed_result', 'wp_filter_pre_oembed_result', 10);
   }
 
 
-  /**
-   * Entfernt oEmbed-Plugin aus TinyMCE
-   * @param array $plugins
-   * @return array
-   */
   public function disable_embeds_tinymce_plugin($plugins)
   {
     return array_diff($plugins, ['wpembed']);
   }
 
 
-  /**
-   * Entfernt oEmbed-Rewrite-Rules
-   * @param array $rules
-   * @return array
-   */
   public function disable_embeds_rewrites($rules)
   {
     foreach ($rules as $rule => $rewrite) {
@@ -202,35 +137,24 @@ class Optimization
   }
 
 
-  /**
-   * Entfernt DNS-Prefetching für WordPress
-   * @return void
-   */
   private function remove_dns_prefetch()
   {
     remove_action('wp_head', 'wp_resource_hints', 2);
   }
 
 
-  /**
-   * Entfernt REST API & XML-RPC-Infos aus head und headers
-   * @return void
-   */
   private function remove_api_headers()
   {
-    // Deactivate XML-RPC
     remove_action('xmlrpc_rsd_apis', 'rest_output_rsd');
     add_filter('xmlrpc_enabled', '__return_false');
     remove_action('wp_head', 'rsd_link');
     remove_action('wp_head', 'wlwmanifest_link');
 
-    // Remove REST API links
     if (!is_admin()) {
       remove_action('wp_head', 'rest_output_link_wp_head', 10);
       remove_action('template_redirect', 'rest_output_link_header', 11);
     }
 
-    // Remove Generator Tag
     remove_action('wp_head', 'wp_generator');
   }
 
