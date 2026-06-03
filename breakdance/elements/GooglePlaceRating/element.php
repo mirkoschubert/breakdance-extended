@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceExtElement;
+namespace BreakdanceExtendedElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
@@ -9,7 +9,7 @@ use function Breakdance\Elements\PresetSections\getPresetSection;
 if (get_option('bdext_feature_google_rating', '1') !== '1') return;
 
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceExtElement\\GooglePlaceRating",
+    "BreakdanceExtendedElement\\GooglePlaceRating",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 

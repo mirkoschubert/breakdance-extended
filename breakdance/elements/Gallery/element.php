@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceExtElement;
+namespace BreakdanceExtendedElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
@@ -9,11 +9,11 @@ use function Breakdance\Elements\PresetSections\getPresetSection;
 if (get_option('bdext_feature_gallery', '1') !== '1') return;
 
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceExtElement\\BAGallery",
+    "BreakdanceExtendedElement\\Gallery",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
-class BAGallery extends \Breakdance\Elements\Element
+class Gallery extends \Breakdance\Elements\Element
 {
     static function uiIcon()
     {
@@ -37,12 +37,12 @@ class BAGallery extends \Breakdance\Elements\Element
 
     static function name()
     {
-        return 'BA Gallery';
+        return 'Gallery (a11y)';
     }
 
     static function className()
     {
-        return 'bde-a11y-gallery';
+        return 'bdext-gallery';
     }
 
     static function category()

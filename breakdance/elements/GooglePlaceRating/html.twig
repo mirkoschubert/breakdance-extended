@@ -1,13 +1,13 @@
 {% set is_link = content.components.link_mode == 'google_maps' %}
 {% set inner_tag = is_link ? 'a' : 'div' %}
-<{{ inner_tag }} class="bda11y-google-rating__inner"
+<{{ inner_tag }} class="bdext-google-rating__inner"
      data-place-id="{{ content.components.place_id }}"
      data-show-number="{{ content.components.show_rating ? '1' : '0' }}"
      data-show-count="{{ content.components.show_count ? '1' : '0' }}"
      {% if is_link %}href="" target="_blank" rel="noopener noreferrer"{% endif %}
 >
 
-<span class="bda11y-google-rating__google-logo" aria-hidden="true">
+<span class="bdext-google-rating__google-logo" aria-hidden="true">
 {% if design.logo.custom_logo.logo.svgCode %}
   {{ design.logo.custom_logo.logo.svgCode }}
 {% else %}
@@ -18,9 +18,9 @@
 {# Two stacked star rows: empty below, filled on top clipped to fill percentage.
    clip-path on the filled layer is animated by JS from 0% to the real value
    when the element enters the viewport (IntersectionObserver). #}
-<div class="bda11y-google-rating__stars">
+<div class="bdext-google-rating__stars">
 
-  <div class="bda11y-google-rating__stars-empty">
+  <div class="bdext-google-rating__stars-empty">
     {% if content.components.icon_type == 'fontawesome' or not content.components.icon_type %}
 
       <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
@@ -48,7 +48,7 @@
     {% endif %}
   </div>
 
-  <div class="bda11y-google-rating__stars-filled" aria-hidden="true">
+  <div class="bdext-google-rating__stars-filled" aria-hidden="true">
     {% if content.components.icon_type == 'fontawesome' or not content.components.icon_type %}
 
       <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
@@ -76,13 +76,13 @@
     {% endif %}
   </div>
 
-</div>{# /.bda11y-google-rating__stars #}
+</div>{# /.bdext-google-rating__stars #}
 
 {% if content.components.show_rating %}
-  <span class="bda11y-google-rating__value">-</span>
+  <span class="bdext-google-rating__value">-</span>
 {% endif %}
 {% if content.components.show_count %}
-<span class="bda11y-google-rating__count">-</span>
+<span class="bdext-google-rating__count">-</span>
 {% endif %}
 
-</{{ inner_tag }}>{# /.bda11y-google-rating__inner #}
+</{{ inner_tag }}>{# /.bdext-google-rating__inner #}

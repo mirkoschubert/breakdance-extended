@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceExtElements;
+namespace BreakdanceExtendedElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
@@ -9,7 +9,7 @@ use function Breakdance\Elements\PresetSections\getPresetSection;
 if (get_option('bdext_feature_leaflet', '1') !== '1') return;
 
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceExtElements\\LeafletMaps",
+    "BreakdanceExtendedElement\\LeafletMaps",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 

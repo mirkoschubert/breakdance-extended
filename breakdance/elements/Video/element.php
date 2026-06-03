@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceExtElement;
+namespace BreakdanceExtendedElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
@@ -9,11 +9,11 @@ use function Breakdance\Elements\PresetSections\getPresetSection;
 if (get_option('bdext_feature_video', '1') !== '1') return;
 
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceExtElement\\BAVideo",
+    "BreakdanceExtendedElement\\Video",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
-class BAVideo extends \Breakdance\Elements\Element
+class Video extends \Breakdance\Elements\Element
 {
     static function uiIcon()
     {
@@ -37,12 +37,12 @@ class BAVideo extends \Breakdance\Elements\Element
 
     static function name()
     {
-        return 'BA Video';
+        return 'Video (a11y)';
     }
 
     static function className()
     {
-        return 'bde-video';
+        return 'bdext-video';
     }
 
     static function category()

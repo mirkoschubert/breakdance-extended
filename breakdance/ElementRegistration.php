@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceCustomElements;
+namespace BreakdanceExtendedElements;
 
 use function Breakdance\Util\getDirectoryPathRelativeToPluginFolder;
 use function Breakdance\ElementStudio\registerSaveLocation;
@@ -11,7 +11,7 @@ function registerElements()
     add_action('breakdance_loaded', function () {
         registerSaveLocation(
             getDirectoryPathRelativeToPluginFolder(__DIR__) . '/elements',
-            'BreakdanceExtElements',
+            'BreakdanceExtendedElements',
             'element',
             'Breakdance Extended Elements',
             false
@@ -19,7 +19,7 @@ function registerElements()
 
         registerSaveLocation(
             getDirectoryPathRelativeToPluginFolder(__DIR__) . '/macros',
-            'BreakdanceExtElements',
+            'BreakdanceExtendedElements',
             'macro',
             'Breakdance Extended Macros',
             false,
@@ -27,14 +27,14 @@ function registerElements()
 
         registerSaveLocation(
             getDirectoryPathRelativeToPluginFolder(__DIR__) . '/presets',
-            'BreakdanceExtElements',
+            'BreakdanceExtendedElements',
             'preset',
             'Breakdance Extended Presets',
             false,
         );
 
         $any_active = array_reduce(
-            ['video', 'gallery', 'icon', 'blockquote', 'google_rating', 'leaflet'],
+            ['video', 'gallery', 'icon', 'blockquote', 'masked_reveal_heading', 'google_rating', 'leaflet'],
             fn($carry, $key) => $carry || get_option('bdext_feature_' . $key, '1') === '1',
             false
         );
@@ -42,8 +42,5 @@ function registerElements()
         if ($any_active) {
             registerCategory('breakdance-extended', 'Breakdance Extended');
         }
-    },
-        // register elements before loading them
-        9
-    );
+    }, 9);
 }

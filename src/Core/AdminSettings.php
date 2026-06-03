@@ -5,13 +5,14 @@ namespace Breakdance\Ext\Core;
 class AdminSettings
 {
     private const FEATURES = [
-        'video'          => 'BA Video',
-        'gallery'        => 'BA Gallery',
-        'icon'           => 'BA Icon',
-        'blockquote'     => 'BA Blockquote',
-        'google_rating'  => 'Google Place Rating',
-        'leaflet'        => 'Leaflet Maps',
-        'optimization'   => 'Optimization',
+        'video'                 => 'Video (a11y)',
+        'gallery'               => 'Gallery (a11y)',
+        'icon'                  => 'Icon (a11y)',
+        'blockquote'            => 'Blockquote (a11y)',
+        'masked_reveal_heading' => 'Masked Reveal Heading',
+        'google_rating'         => 'Google Place Rating',
+        'leaflet'               => 'Leaflet Maps',
+        'optimization'          => 'Optimization',
     ];
 
     public function __construct()

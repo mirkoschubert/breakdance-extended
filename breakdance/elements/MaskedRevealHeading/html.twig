@@ -1,0 +1,17 @@
+{% if content.content.lines is not empty %}
+  {% for item in content.content.lines %}
+    <span class="line">
+      <span class="text {{ item.style }}">{{ item.text }}{% if item.dot %}<span class="reveal-dot">.</span>{% endif %}</span>
+    </span>
+  {% endfor %}
+{% else %}
+  <span class="line">
+    <span class="text default">Build fast</span>
+  </span>
+  <span class="line">
+    <span class="text outline">Stand out</span>
+  </span>
+  <span class="line">
+    <span class="text accent">Ship better<span class="reveal-dot">.</span></span>
+  </span>
+{% endif %}

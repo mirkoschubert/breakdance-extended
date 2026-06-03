@@ -1,4 +1,4 @@
-.breakdance .bde-a11y-blockquote {
+.breakdance .bdext-blockquote {
   max-width: 100%;
   background-color: #FFF2D3;
   text-align: left;
@@ -10,11 +10,11 @@
   font-size: 24px;
 }
 
-.breakdance .bde-a11y-blockquote blockquote {
+.breakdance .bdext-blockquote blockquote {
   margin: 0;
 }
 
-.breakdance .bde-a11y-blockquote cite {
+.breakdance .bdext-blockquote cite {
   display: inline-block;
   width: 100%;
   margin-top: 25px;

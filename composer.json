@@ -8,7 +8,7 @@
   "autoload": {
     "psr-4": {
       "Breakdance\\Ext\\": "src/",
-      "BreakdanceCustomElements\\": "breakdance/"
+      "BreakdanceExtendedElements\\": "breakdance/"
     },
     "files": [
       "breakdance/ElementRegistration.php"

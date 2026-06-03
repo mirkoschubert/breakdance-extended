@@ -1,6 +1,6 @@
 <?php
 
-namespace BreakdanceExtElement;
+namespace BreakdanceExtendedElement;
 
 use function Breakdance\Elements\c;
 use function Breakdance\Elements\PresetSections\getPresetSection;
@@ -9,11 +9,11 @@ use function Breakdance\Elements\PresetSections\getPresetSection;
 if (get_option('bdext_feature_icon', '1') !== '1') return;
 
 \Breakdance\ElementStudio\registerElementForEditing(
-    "BreakdanceExtElement\\BAIcon",
+    "BreakdanceExtendedElement\\Icon",
     \Breakdance\Util\getdirectoryPathRelativeToPluginFolder(__DIR__)
 );
 
-class BAIcon extends \Breakdance\Elements\Element
+class Icon extends \Breakdance\Elements\Element
 {
     static function uiIcon()
     {
@@ -37,12 +37,12 @@ class BAIcon extends \Breakdance\Elements\Element
 
     static function name()
     {
-        return 'BA Icon';
+        return 'Icon (a11y)';
     }
 
     static function className()
     {
-        return 'bde-a11y-icon';
+        return 'bdext-icon';
     }
 
     static function category()

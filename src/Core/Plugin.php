@@ -5,7 +5,7 @@ namespace Breakdance\Ext\Core;
 use Breakdance\Ext\Core\Optimization;
 use Breakdance\Ext\Core\AdminSettings;
 use Breakdance\Ext\Core\GooglePlaceRatingController;
-use function BreakdanceCustomElements\registerElements;
+use function BreakdanceExtendedElements\registerElements;
 
 class Plugin
 {
@@ -40,6 +40,31 @@ class Plugin
     });
 
     add_filter('rank_math/frontend/breadcrumb/items', [$this, 'register_job_breadcrumb'], 10, 2);
+
+    add_filter('breakdance_builder_elements', [$this, 'filter_disabled_elements']);
+  }
+
+  public function filter_disabled_elements(array $elements): array
+  {
+    $map = [
+      'video'                 => 'BreakdanceExtendedElement\Video',
+      'gallery'               => 'BreakdanceExtendedElement\Gallery',
+      'icon'                  => 'BreakdanceExtendedElement\Icon',
+      'blockquote'            => 'BreakdanceExtendedElement\Blockquote',
+      'masked_reveal_heading' => 'BreakdanceExtendedElement\MaskedRevealHeading',
+      'google_rating'         => 'BreakdanceExtendedElement\GooglePlaceRating',
+      'leaflet'               => 'BreakdanceExtendedElement\LeafletMaps',
+    ];
+
+    $disabled = array_values(array_filter(
+      array_map(
+        fn($key, $slug) => get_option('bdext_feature_' . $key, '1') !== '1' ? $slug : null,
+        array_keys($map),
+        $map
+      )
+    ));
+
+    return array_values(array_diff($elements, $disabled));
   }
 
 
@@ -83,9 +108,9 @@ class Plugin
   public function register_dependencies()
   {
     add_filter('breakdance_reusable_dependencies_urls', function ($urls) {
-      $urls['bdextGooglePlaceRatingJs'] = plugins_url('breakdance/elements/Google_Place_Rating/assets/js/google-place-rating.js', BDEXT_PATH);
+      $urls['bdextGooglePlaceRatingJs'] = plugins_url('breakdance/elements/GooglePlaceRating/assets/js/google-place-rating.js', BDEXT_PATH);
 
-      $base = plugins_url('breakdance/elements/Leaflet_Maps/assets', BDEXT_PATH);
+      $base = plugins_url('breakdance/elements/LeafletMaps/assets', BDEXT_PATH);
 
       $urls['bdextLeafletJs'] = $base . '/js/leaflet.js';
       $urls['bdextLeafletCss'] = $base . '/css/leaflet.css';
