@@ -1,0 +1,30 @@
+.breakdance .bdext-tp-language-switch {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.breakdance .bdext-tp-language-switch .separator {
+  margin: 0 0.4em;
+  opacity: 0.5;
+}
+
+.breakdance .bdext-tp-language-switch .link {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.breakdance .bdext-tp-language-switch .link:hover,
+.breakdance .bdext-tp-language-switch .link:focus {
+  opacity: 1;
+}
+
+.breakdance .bdext-tp-language-switch .link.is-active,
+.breakdance .bdext-tp-language-switch .link[aria-current="true"] {
+  opacity: 1;
+  font-weight: 700;
+}
